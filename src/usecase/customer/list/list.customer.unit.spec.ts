@@ -1,5 +1,5 @@
-import Address from "../../domain/customer/entity/address";
-import CustomerFactory from "../../domain/customer/factory/customer.factory";
+import Address from "../../../domain/customer/entity/address";
+import CustomerFactory from "../../../domain/customer/factory/customer.factory";
 import ListCustomerUseCase from "./list.customer.usecase";
 
 
