@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import Address from "../../../../domain/customer/entity/address";
 import Customer from "../../../../domain/customer/entity/customer";
+import CustomerFactory from "../../../../domain/customer/factory/customer.factory";
 import CustomerModel from "./customer.model";
 import CustomerRepository from "./customer.repository";
 
@@ -46,35 +47,34 @@ describe('Customer repository test', () => {
     })
   });
 
-  // it("Should update a product", async () => {
+  it("Should update a customer", async() => {
 
-  //   const productRepository = new ProductRepository();
-  //   const product = new Product("1", "Product 1", 100);
+    const customer = CustomerFactory.createWithAddress(
+      "Jhon Jhoe", new Address("Street 1","1",  "Brasil", "59290-000")
+    );
 
-  //   await productRepository.create(product);
+    const customerRepository = new CustomerRepository();
+    await customerRepository.create(customer);
 
-  //   const productModel = await ProductModel.findOne({ where: { id: "1"}});
+    customer.changeName("Jhon Update");
+    await customerRepository.update(customer);
 
-  //   expect(productModel.toJSON()).toStrictEqual({
-  //     id: "1",
-  //     name: "Product 1",
-  //     price: 100,
-  //   });
+    const customerModel = await CustomerModel.findOne({ where: { id: customer.id}});
 
-  //   product.changeName("Product 2");
-  //   product.changePrice(200);
+    expect(customerModel.toJSON()).toStrictEqual({
+      id: customer.id,
+      name: "Jhon Update",
+      active: customer.isActive(),
+      rewardsPoints: customer.reawardPoints,
+      street: customer.address.street,
+      number: customer.address.number,
+      zipcode: customer.address.zipcode,
+      city: customer.address.city
+    });
 
-  //   await productRepository.update(product);
+  });
 
-  //   const productModel2 = await ProductModel.findOne({ where: { id: "1"}});
-
-  //   expect(productModel2.toJSON()).toStrictEqual({
-  //     id: "1",
-  //     name: "Product 2",
-  //     price: 200,
-  //   });
-  // });
-
+  
 
   // it("should find a product", async () => {
   //   const productRepository = new ProductRepository();
