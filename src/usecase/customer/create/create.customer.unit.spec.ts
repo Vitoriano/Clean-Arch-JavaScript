@@ -7,7 +7,7 @@ const input = {
     street: "street",
     city: "city",
     number: "123",
-    zip: "zipcode"
+    zipcode: "zipcode"
   }
 };
 
@@ -35,7 +35,7 @@ describe("Unit test create customer user case", () => {
       address: {
         street: input.address.street,
         number: input.address.number,
-        zip: input.address.zip,
+        zip: input.address.zipcode,
         city: input.address.city
       },
     });
