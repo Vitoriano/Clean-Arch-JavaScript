@@ -1,5 +1,6 @@
 import Address from "../../../../domain/customer/entity/address"
 import Customer from "../../../../domain/customer/entity/customer"
+import CustomerFactory from "../../../../domain/customer/factory/customer.factory"
 import CustomerRepositoryInterface from "../../../../domain/customer/repository/customer-repository.interface"
 import CustomerModel from "./customer.model"
 
@@ -73,11 +74,31 @@ export default class CustomerRepository implements CustomerRepositoryInterface{
  }
 
   async findAll(): Promise<Customer[]> {
-    throw Error("Method not implemented")
-    // const productsModels = await ProductModel.findAll();
+    const customersModel = await CustomerModel.findAll();
 
-    // return productsModels.map((productModel) => 
-    //   new Product(productModel.id, productModel.name, productModel.price)
-    // );
+    const output: Customer[] = []
+
+     customersModel.map((customerModel) => {
+
+      let outputAddress = new Address(
+        customerModel.street,
+        customerModel.number,
+        customerModel.zipcode,
+        customerModel.city
+      );
+
+      output.push(
+        CustomerFactory.listCustomerWithAddress(
+        customerModel.name, 
+        customerModel.id,
+        outputAddress
+      ))
+     }
+     
+    );
+
+    return output;
+    
   }
+  
 }

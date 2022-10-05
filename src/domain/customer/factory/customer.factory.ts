@@ -14,4 +14,23 @@ export default class CustomerFactory {
 
     return customer;
   }
+
+  public static listCustomerWithAddress(name: string, id: string , address: Address): Customer {
+   
+    const customerOutput =  new Customer (
+      id,
+      name
+     );
+   
+     const addressOutput = new Address(
+       address.street,
+       address.number,
+       address.zipcode,
+       address.city
+     );
+   
+     customerOutput.address = addressOutput;
+
+     return customerOutput;
+  }
 }
